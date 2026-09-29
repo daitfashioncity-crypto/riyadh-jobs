@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#123b75">
+<title>Riyadh Jobs | Find Your Next Job</title>
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:#f3f6fb;color:#18243a}
+header{background:#123b75;color:white;padding:25px 18px 30px;border-radius:0 0 24px 24px}
+.brand{font-size:23px;font-weight:800}header p{font-size:14px;line-height:1.5;color:#e0eaff}
+.wrap{max-width:760px;margin:auto;padding:16px}
+.search{display:flex;gap:8px;margin-top:18px}
+input,select{width:100%;padding:13px;border:1px solid #d7dfeb;border-radius:10px;background:white;font-size:15px}
+.search button,.apply{border:0;background:#16804a;color:white;padding:12px 16px;border-radius:10px;font-weight:bold;white-space:nowrap}
+.filters{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin:14px 0}
+h2{font-size:19px;margin:22px 0 12px}
+.notice{background:#fff7df;border:1px solid #f2df9f;border-radius:10px;padding:11px;font-size:12px;line-height:1.5;color:#654e13}
+.card{background:white;border:1px solid #e3e9f2;border-radius:15px;padding:16px;margin:12px 0;box-shadow:0 3px 12px #102b5010}
+.card h3{margin:0 0 8px;font-size:18px}.company{color:#53647c;font-size:13px}
+.tags{display:flex;flex-wrap:wrap;gap:7px;margin:12px 0}
+.tag{background:#edf3ff;color:#244c86;padding:6px 9px;border-radius:7px;font-size:12px}
+.details{font-size:13px;line-height:1.8;color:#42516a}
+.apply{display:block;text-align:center;text-decoration:none;margin-top:13px}
+footer{text-align:center;color:#68778b;font-size:12px;padding:25px}
+.empty{display:none;text-align:center;padding:25px;color:#68778b}
+</style>
+</head>
+<body>
+<header><div class="wrap">
+<div class="brand">📍 Riyadh Jobs</div>
+<p>Find restaurant, hotel, retail and helper jobs in Riyadh, Saudi Arabia.</p>
+<div class="search"><input id="q" placeholder="Search waiter, cashier, helper..." aria-label="Search jobs"><button onclick="render()">Search</button></div>
+</div></header>
+<main class="wrap">
+<div class="filters">
+<select id="cat" onchange="render()"><option value="">All job categories</option><option>Restaurant</option><option>Hotel</option><option>Retail</option><option>Helper</option><option>Driver</option></select>
+<select id="iqama" onchange="render()"><option value="">All iqama requirements</option><option value="yes">Transferable iqama</option><option value="no">Not specified</option></select>
+</div>
+<div class="notice">⚠️ Job listings below are examples for website testing, not verified vacancies. Confirm the employer, salary, iqama requirements and any fees before accepting a job. Never pay an unverified recruiter.</div>
+<h2>Jobs in Riyadh</h2>
+<div id="count" class="company"></div>
+<div id="jobs"></div><div id="empty" class="empty">No matching jobs. Try another search.</div>
+<h2>For employers</h2>
+<div class="card"><p>Want to advertise a vacancy? Contact the website administrator to submit your company name, job details, salary and verified contact information.</p><p class="company">Employer listings will be added after verification.</p></div>
+</main>
+<footer>Riyadh Jobs · Independent job listing demo · Verify vacancies before applying.</footer>
+<script>
+const jobs=[
+{title:"Waiter / Restaurant Staff",company:"Example listing — not a real vacancy",cat:"Restaurant",salary:"Salary not verified",loc:"Riyadh",iqama:"yes",desc:"Restaurant service, taking orders and serving guests."},
+{title:"Cashier / POS Operator",company:"Example listing — not a real vacancy",cat:"Restaurant",salary:"Salary not verified",loc:"Riyadh",iqama:"yes",desc:"Handle customer payments and operate a POS system."},
+{title:"Fast Food Crew Member",company:"Example listing — not a real vacancy",cat:"Restaurant",salary:"Salary not verified",loc:"Riyadh",iqama:"yes",desc:"Customer service, food preparation and team support."},
+{title:"Office Boy / Office Helper",company:"Example listing — not a real vacancy",cat:"Helper",salary:"Salary not verified",loc:"Riyadh",iqama:"",desc:"General office support and keeping the workplace tidy."},
+{title:"Hotel Housekeeping Staff",company:"Example listing — not a real vacancy",cat:"Hotel",salary:"Salary not verified",loc:"Riyadh",iqama:"",desc:"Room cleaning and guest-area support."},
+{title:"Store Assistant",company:"Example listing — not a real vacancy",cat:"Retail",salary:"Salary not verified",loc:"Riyadh",iqama:"",desc:"Stock arrangement and customer assistance."}
+];
+function render(){
+const q=document.getElementById('q').value.toLowerCase().trim();
+const cat=document.getElementById('cat').value;
+const iq=document.getElementById('iqama').value;
+const filtered=jobs.filter(j=>(!q||(j.title+" "+j.cat+" "+j.desc+" "+j.loc).toLowerCase().includes(q))&&(!cat||j.cat===cat)&&(!iq||(iq==="yes"?j.iqama==="yes":!j.iqama)));
+document.getElementById('count').textContent=filtered.length+" demo listings";
+document.getElementById('jobs').innerHTML=filtered.map(j=>'<article class="card"><h3>'+j.title+'</h3><div class="company">'+j.company+'</div><div class="tags"><span class="tag">'+j.cat+'</span><span class="tag">'+j.loc+'</span>'+(j.iqama?'<span class="tag">Transferable iqama filter demo</span>':'')+'</div><div class="details">💰 '+j.salary+'<br>📋 '+j.desc+'</div><div class="company" style="margin-top:12px">Demo only — no employer contact supplied.</div></article>').join('');
+document.getElementById('empty').style.display=filtered.length?'none':'block';
+}
+document.getElementById('q').addEventListener('keydown',e=>{if(e.key==='Enter')render()});
+render();
+</script>
+</body>
+</html>
